@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import UserInput from './components/UserInput';
 import UserOutput from './components/UserOutput';
-import './components/UserOutput.css';
-import './components/UserInput.css';
+import UserInputCounter from './components/UserInputCounter';
+import UserOutputCounter from './components/UserOutputCounter';
+import UserInputCounterValidator from './components/UserInputCounterValidator';
+import CharacterManipulator from './components/CharacterManipulator';
 
 class App extends Component {
   state =  {
@@ -14,7 +16,9 @@ class App extends Component {
       { id:4 , name: 'Timothy' , age: 30 },
       { id:5 , name: 'Amelia' , age: 24 },
       { id:6 , name: 'Allison' , age: 33 }
-    ]
+    ],
+    userInput: ''
+    
   }
 
   inputChanger = (event) => {
@@ -30,9 +34,35 @@ class App extends Component {
     });
   }
 
+  inputCounter = (event) => {
+    this.setState(
+      {
+        userInput: event.target.value
+      }
+    );
+  }
+
+  deleteCharHandler = (index) => {
+    const charArr = this.state.userInput.split('');
+    charArr.splice(index,1);
+    const updatedCharArr = charArr.join('');
+    this.setState({userInput:updatedCharArr});
+  }
+
   render() {
+
+    const charArr = this.state.userInput.split('').map((ch,index) => {
+      return (
+      <CharacterManipulator 
+        value={ch} 
+        key={index} 
+        clicked={() => this.deleteCharHandler(index)}
+      />)
+    });
+
     return (
       <div className="App">
+        <h3>Assignment 1</h3>
         <ol>
           <li>Create TWO new components: UserInput and UserOutput</li>
           <li>UserInput should hold an input element, UserOutput two paragraphs</li>
@@ -48,13 +78,31 @@ class App extends Component {
         <br/>
         <br/>
         <p> List of Usernames: </p>
-        <UserInput changed={this.inputChanger} name={this.state.userName[0].name} />
+        <UserInput change={this.inputChanger} name={this.state.userName[0].name} />
         <UserOutput id={this.state.userName[0].id} name={this.state.userName[0].name} age={this.state.userName[0].age}/>
         <UserOutput id={this.state.userName[1].id} name={this.state.userName[1].name} age={this.state.userName[1].age}/>
         <UserOutput id={this.state.userName[2].id} name={this.state.userName[2].name} age={this.state.userName[2].age}/>
         <UserOutput id={this.state.userName[3].id} name={this.state.userName[3].name} age={this.state.userName[3].age}/>
         <UserOutput id={this.state.userName[4].id} name={this.state.userName[4].name} age={this.state.userName[4].age}/>
         <UserOutput id={this.state.userName[5].id} name={this.state.userName[5].name} age={this.state.userName[5].age}/>
+        <br/>
+        <br/>
+        <h3>Assignment 2</h3>
+        <ol>
+          <li>Create an input field (in App component) with a change listener which outputs the length of the entered text below it (e.g. in a paragraph).</li>
+          <li>Create a new component (=> ValidationComponent) which receives the text length as a prop</li>
+          <li>Inside the ValidationComponent, either output "Text too short" or "Text long enough" depending on the text length (e.g. take 5 as a minimum length)</li>
+          <li>Create another component (=> CharComponent) and style it as an inline box (=> display: inline-block, padding: 16px, text-align: center, margin: 16px, border: 1px solid black).</li>
+          <li>Render a list of CharComponents where each CharComponent receives a different letter of the entered text (in the initial input field) as a prop.</li>
+          <li>When you click a CharComponent, it should be removed from the entered text.</li>
+        </ol>
+        <p>Hint: Keep in mind that JavaScript strings are basically arrays!</p>
+        <br/>
+        <br/>
+        <UserInputCounter change={this.inputCounter} value={this.state.userInput}/>
+        <UserOutputCounter value={this.state.userInput.length} />
+        <UserInputCounterValidator value={this.state.userInput.length}/>
+        {charArr}
         <br/>
         <br/>
       </div>
