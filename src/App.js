@@ -6,6 +6,7 @@ import UserInputCounter from './components/UserInputCounter';
 import UserOutputCounter from './components/UserOutputCounter';
 import UserInputCounterValidator from './components/UserInputCounterValidator';
 import CharacterManipulator from './components/CharacterManipulator';
+import Radium from 'radium';
 
 class App extends Component {
   state =  {
@@ -49,6 +50,10 @@ class App extends Component {
     this.setState({userInput:updatedCharArr});
   }
 
+  toggleAssignment = () => {
+    
+  }
+
   render() {
 
     const charArr = this.state.userInput.split('').map((ch,index) => {
@@ -60,9 +65,17 @@ class App extends Component {
       />)
     });
 
+    const classes = [];
+    if (this.state.userInput.length <= 5) {
+      classes.push('red');
+    }
+    if (this.state.userInput.length >5){
+      classes.push('bold');
+    }
+
     return (
       <div className="App">
-        <h3>Assignment 1</h3>
+        <button onClick={this.toggleAssignmentHandler}><h3>Assignment 1</h3></button>
         <ol>
           <li>Create TWO new components: UserInput and UserOutput</li>
           <li>UserInput should hold an input element, UserOutput two paragraphs</li>
@@ -77,14 +90,16 @@ class App extends Component {
         </ol>
         <br/>
         <br/>
-        <p> List of Usernames: </p>
-        <UserInput change={this.inputChanger} name={this.state.userName[0].name} />
-        <UserOutput id={this.state.userName[0].id} name={this.state.userName[0].name} age={this.state.userName[0].age}/>
-        <UserOutput id={this.state.userName[1].id} name={this.state.userName[1].name} age={this.state.userName[1].age}/>
-        <UserOutput id={this.state.userName[2].id} name={this.state.userName[2].name} age={this.state.userName[2].age}/>
-        <UserOutput id={this.state.userName[3].id} name={this.state.userName[3].name} age={this.state.userName[3].age}/>
-        <UserOutput id={this.state.userName[4].id} name={this.state.userName[4].name} age={this.state.userName[4].age}/>
-        <UserOutput id={this.state.userName[5].id} name={this.state.userName[5].name} age={this.state.userName[5].age}/>
+        <div className="centralise">
+          <p> List of Usernames: </p>
+          <UserInput change={this.inputChanger} name={this.state.userName[0].name} />
+          <UserOutput id={this.state.userName[0].id} name={this.state.userName[0].name} age={this.state.userName[0].age}/>
+          <UserOutput id={this.state.userName[1].id} name={this.state.userName[1].name} age={this.state.userName[1].age}/>
+          <UserOutput id={this.state.userName[2].id} name={this.state.userName[2].name} age={this.state.userName[2].age}/>
+          <UserOutput id={this.state.userName[3].id} name={this.state.userName[3].name} age={this.state.userName[3].age}/>
+          <UserOutput id={this.state.userName[4].id} name={this.state.userName[4].name} age={this.state.userName[4].age}/>
+          <UserOutput id={this.state.userName[5].id} name={this.state.userName[5].name} age={this.state.userName[5].age}/>
+        </div>
         <br/>
         <br/>
         <h3>Assignment 2</h3>
@@ -99,10 +114,13 @@ class App extends Component {
         <p>Hint: Keep in mind that JavaScript strings are basically arrays!</p>
         <br/>
         <br/>
-        <UserInputCounter change={this.inputCounter} value={this.state.userInput}/>
-        <UserOutputCounter value={this.state.userInput.length} />
-        <UserInputCounterValidator value={this.state.userInput.length}/>
-        {charArr}
+        <div className="centralise">
+          <UserInputCounter change={this.inputCounter} value={this.state.userInput}/>
+          <UserOutputCounter value={this.state.userInput.length} />
+          <UserInputCounterValidator value={this.state.userInput.length}/>
+          <p className={classes.join(' ')}>Red and Bold</p>
+          {charArr}
+          </div>
         <br/>
         <br/>
       </div>
@@ -110,4 +128,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);

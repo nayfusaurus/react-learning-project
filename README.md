@@ -4,7 +4,8 @@ https://www.udemy.com/react-the-complete-guide-incl-redux/
 Installation instructions:
 1) Have installed nodejs in the system
 2) Run "npm install" in the extracted folder
-3) Run "npm start" to view the project
+3) Run "npm install --save radium" in the extracted folder
+4) Run "npm start" to view the project
 
 Assignment 1:
 1) Create TWO new components: UserInput and UserOutput
@@ -27,3 +28,6 @@ Assignment 2:
 6) When you click a CharComponent, it should be removed from the entered text.
 
 Hint: Keep in mind that JavaScript strings are basically arrays!
+
+Self Assignment 2.5:
+1) Styling with Radium
